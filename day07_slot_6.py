@@ -206,3 +206,21 @@ print("Os produtos recomendados são:")
 out
 
 """-------------------------------------------------------------------------------"""
+
+SIMILARIDADE DE COSSENOS
+
+from sklearn.metrics.pairwise import cosine_similarity
+cos_prod = cosine_similarity(ratings_df)
+cos_prod
+
+prod_semelhantes = ratings_df.index[3]
+
+print(f'O produto escolhido é: {prod_semelhantes}')
+
+prod_id = ratings_df.index.tolist().index(prod_semelhantes)
+print(f'Produto: {prod_semelhantes}, tem índice: {prod_id}')
+
+similares_10 = np.argsort(-cos_prod[prod_id])[1:10]
+
+for i in zip(ratings_df.index[similares_10],cos_prod[prod_id][similares_10]):
+  print(f'Produto {i[0]} tem similaridade {i[1]:2f} com produto {prod_semelhantes}')
